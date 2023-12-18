@@ -687,7 +687,10 @@
             <div class="row">
               <div class="col-md-12 mb-sm-50">
                 <!-- Contact Form -->
-                <form class="form contact-form pe-lg-5" id="contact_form">
+                <form
+                  class="form contact-form pe-lg-5"
+                  onsubmit="return Mail()"
+                >
                   <div class="row">
                     <div class="col-lg-4">
                       <!-- Name -->
@@ -699,9 +702,7 @@
                           id="name"
                           class="input-lg round form-control"
                           placeholder="Enter your name"
-                          pattern=".{3,100}"
                           required
-                          aria-required="true"
                         />
                       </div>
                     </div>
@@ -716,9 +717,7 @@
                           id="email"
                           class="input-lg round form-control"
                           placeholder="Enter your email"
-                          pattern=".{5,100}"
                           required
-                          aria-required="true"
                         />
                       </div>
                     </div>
@@ -728,9 +727,10 @@
                         <input
                           type="text"
                           name="phone"
-                          id="message"
+                          id="phone"
                           class="input-lg round form-control"
                           placeholder="Enter your phone number"
+                          required
                         />
                       </div>
                     </div>
@@ -744,8 +744,7 @@
                       <div class="pt-20 text-center">
                         <button
                           class="submit_btn btn btn-mod btn-w btn-large btn-round btn-hover-anim"
-                          id="submit_btn"
-                          aria-controls="result"
+                          type="submit"
                         >
                           <span>Send Message</span>
                         </button>
@@ -958,6 +957,42 @@
     <!-- End Page Wrap -->
 
     <!-- JS -->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script>
+      function Mail() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+
+        let body =
+          "Name: " +
+          name +
+          "<br/><br/> Email: " +
+          email +
+          "<br/><br/> Phone Number: " +
+          phone;
+
+        Email.send({
+          Host: "smtp.elasticemail.com",
+          Username: "mo@regalstay.co.uk",
+          Password: "EDC618DACFBB6E300F5823B4FDB5E18BCDC3",
+          To: "mo@regalstay.co.uk",
+          From: "mo@regalstay.co.uk",
+          Subject: "Mail From Regal Stay R2SA Contact Form",
+          Body: body,
+        }).then(function (message) {
+          setTimeout(function () {
+            window.location.href = "index.html";
+          }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+        });
+      }
+      function closeModal() {
+        const modal = document.getElementById("thankYouModal");
+        modal.style.display = "none";
+        window.location.href = "index.html";
+      }
+    </script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/plugins.js"></script>
